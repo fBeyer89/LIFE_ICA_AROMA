@@ -24,13 +24,13 @@ elif mode == 'f':
 
 for subject in subjects:
     print 'Running subject '+subject
-    working_dir = '/data/pt_life/data_fbeyer/Preproc_Aroma/WDR/'+subject+'/'
+    working_dir = '/scr/lessing2/data_fbeyer/FTO_YFAS_aroma/WDR/'+subject+'/'
     #os.makedirs(working_dir)
     data_dir = '/data/liem-1/LIFE/' #1/LIFE/preprocessed/'+subject+'/'
     #os.makedirs(data_dir)
     ##change this depending on new and old freesurfer##
     freesurfer_dir = '/data/pt_life/LIFE/freesurfer_all/subjects/' #  #' # ##
-    resting_dir = '/data/pt_life/data_fbeyer/Preproc_Aroma/Subjects/'+subject+'/'
+    resting_dir = '/scr/lessing2/data_fbeyer/FTO_YFAS_aroma/Subjects/'+subject+'/'
     standard_brain = '/usr/share/fsl/5.0/data/standard/MNI152_T1_2mm_brain.nii.gz'
     standard_brain_resampled = '/home/raid1/fbeyer/Documents/Scripts/ICA_RSN_analysis/MNI/MNI_resampled.nii'
     standard_brain_mask = '/usr/share/fsl/5.0/data/standard/MNI152_T1_2mm_brain_mask.nii.gz'
