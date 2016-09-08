@@ -13,7 +13,6 @@ import nipype.interfaces.fsl as fsl
 from strip_rois import strip_rois_func
 from moco import create_moco_pipeline
 from denoise_for_aroma import create_denoise_pipeline
-#from ICA_AROMA2 import create_ica_aroma
 from smoothing import create_smoothing_pipeline
 from fmap_coreg import create_fmap_pipeline
 import ICA_AROMA_functions as aromafunc
@@ -34,7 +33,7 @@ for ICA-AROMA code see: https://github.com/rhr-pruim/ICA-AROMA
 ====================================================
 '''
 def create_aroma_prep(subject, working_dir, data_dir, freesurfer_dir, out_dir,
-    vol_to_remove, TR, epi_resolution, highpass, lowpass,
+    vol_to_remove, TR, epi_resolution, highpass,
     echo_space, te_diff, pe_dir, standard_brain, standard_brain_resampled, standard_brain_mask, 
     standard_brain_mask_resampled, fwhm_smoothing):
     # set fsl output type to nii.gz
@@ -184,7 +183,7 @@ def create_aroma_prep(subject, working_dir, data_dir, freesurfer_dir, out_dir,
                              output_names=["maxRPcorr"],
                             function=aromafunc.feature_time_series))
     
-    save_featts=Node(name="save_outputs", interface=Function(input_names=["filename", "in_data"],
+    save_featts=Node(name="save_featts", interface=Function(input_names=["filename", "in_data"],
                      output_names=["filename"],
                      function=small_save))
     
