@@ -31,7 +31,7 @@ def runICA(fslDir, inFile, outDir, melDirIn, mask, dim, TR):
 	melIC = os.path.join(melDir,'melodic_IC.nii.gz')
 	melICmix = os.path.join(melDir,'melodic_mix')
 	melICthr = os.path.join(outDir,'melodic_IC_thr.nii.gz')
-	melodic_FTmix= os.path.join(outDir,'melodic_FTmix')
+	melodic_FTmix= os.path.join(melDir,'melodic_FTmix')
        
 
 	# When a MELODIC directory is specified, check wheter all needed files are present. Otherwise... run MELODIC again
@@ -59,13 +59,16 @@ def runICA(fslDir, inFile, outDir, melDirIn, mask, dim, TR):
 				'--Ostats --mmthresh=0.5']))
 			
 	else:
+
+		os.makedirs(melDir)
 		# If a melodic directory was specified, display that it did not contain all files needed for ICA-AROMA (or that the directory does not exist at all)
 		if len(melDirIn) != 0 :
 			if not os.path.isdir(melDirIn):
 				print '  - The specified MELODIC directory does not exist. MELODIC will be run seperately.'
 			else:
 				print '  - The specified MELODIC directory does not contain the required files to run ICA-AROMA. MELODIC will be run seperately.'
-         
+		else: 
+			print ' - Melodic will be run'
 		# Run MELODIC
 		
 		os.system(' '.join([os.path.join(fslDir,'melodic'),
@@ -523,7 +526,7 @@ def denoising(fslDir, inFile, outDir, melmix, denType, denIdx):
 	Output (within the requested output directory)
 	---------------------------------------------------------------------------------
 	denoised_func_data_<denType>.nii.gz:		A nii.gz file of the denoised fMRI data"""
-	print "XXXXXXXXXXXXXXXRUNNINGDENOISINGXXXXXXXXXXXXXXXXXXX"
+
 	# Import required modules
 	import os
 	import numpy as np
@@ -537,10 +540,9 @@ def denoising(fslDir, inFile, outDir, melmix, denType, denIdx):
 		print denType
 		print (denType == 2)
 
-		print '+denType2+'		# Non-aggressive denoising of the data using fsl_regfilt (partial regression), if requested
+		# Non-aggressive denoising of the data using fsl_regfilt (partial regression), if requested
 		if (denType == 2) or (denType == 3):	
-			print "then non-aggressive denoising is done"
-			print "non aggressive denoising is done"
+			print "non-aggressive denoising is done"
 			os.system(' '.join([os.path.join(fslDir,'fsl_regfilt'),
 				'--in=' + inFile,
 				'--design=' + melmix,
@@ -549,6 +551,7 @@ def denoising(fslDir, inFile, outDir, melmix, denType, denIdx):
 
 		# Aggressive denoising of the data using fsl_regfilt (full regression)
 		if (denType == 1) or (denType == 3):
+			print "aggressive denoising is done"
 			os.system(' '.join([os.path.join(fslDir,'fsl_regfilt'),
 				'--in=' + inFile,
 				'--design=' + melmix,
