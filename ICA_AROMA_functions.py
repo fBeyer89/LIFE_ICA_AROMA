@@ -33,7 +33,7 @@ def runICA(fslDir, inFile, outDir, melDirIn, mask, dim, TR):
 	melICthr = os.path.join(outDir,'melodic_IC_thr.nii.gz')
 	melodic_FTmix= os.path.join(melDir,'melodic_FTmix')
        
-
+	
 	# When a MELODIC directory is specified, check wheter all needed files are present. Otherwise... run MELODIC again
 	if (len(melDir) != 0) and os.path.isfile(os.path.join(melDirIn,'melodic_IC.nii.gz')) and os.path.isfile(os.path.join(melDirIn,'melodic_FTmix')) and os.path.isfile(os.path.join(melDirIn,'melodic_mix')):
 
@@ -46,7 +46,7 @@ def runICA(fslDir, inFile, outDir, melDirIn, mask, dim, TR):
 			print '  - The MELODIC directory does not contain the required \'stats\' folder. Mixture modeling on the Z-statistical maps will be run.'
 			
 			# Create symbolic links to the items in the specified melodic directory
-			os.makedirs(melDir)
+			
 			for item in os.listdir(melDirIn):
 				os.symlink(os.path.join(melDirIn,item),os.path.join(melDir,item))
 
@@ -60,7 +60,7 @@ def runICA(fslDir, inFile, outDir, melDirIn, mask, dim, TR):
 			
 	else:
 
-		os.makedirs(melDir)
+		
 		# If a melodic directory was specified, display that it did not contain all files needed for ICA-AROMA (or that the directory does not exist at all)
 		if len(melDirIn) != 0 :
 			if not os.path.isdir(melDirIn):
@@ -68,7 +68,12 @@ def runICA(fslDir, inFile, outDir, melDirIn, mask, dim, TR):
 			else:
 				print '  - The specified MELODIC directory does not contain the required files to run ICA-AROMA. MELODIC will be run seperately.'
 		else: 
-			print ' - Melodic will be run'
+			if os.path.isdir(melDir):
+				print ' - Melodic will be run'
+			else:
+				os.makedirs(melDir)
+				print ' - Melodic will be run'
+    
 		# Run MELODIC
 		
 		os.system(' '.join([os.path.join(fslDir,'melodic'),
