@@ -10,3 +10,8 @@ then run python run_prep_aroma.py s "ID" or run_prep_aroma.py f "filename"
 
 
 creates approx 5 GB in WDR + 3 GB in outputdir!!
+
+
+TO DO: 
+change hardcoded TR in code!
+change directory of csf/skull-reference files!!
